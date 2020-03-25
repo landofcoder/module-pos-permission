@@ -1,0 +1,23 @@
+{
+    "name": "landofcoder/module-pospermission",
+    "description": "Magento 2 Web POS lets you grant different permissions to sale staffs depending on their roles to take certain actions on POS. This will save you from potential threats, keep sensitive information secure and make you manage multiple POS locations easier and better. No muss, no fuss!",
+    "type": "magento2-module",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Landofcoder",
+            "email": "info@landofcoder.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Lof\\PosPermission\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
