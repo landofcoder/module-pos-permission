@@ -1,37 +1,30 @@
 <?php
 /**
- * Copyright (c) 2019 landofcoder.com
+ * Landofcoder
  * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * NOTICE OF LICENSE
  * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * This source file is subject to the Landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * https://landofcoder.com/license
  * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_PosPermission
+ * @copyright  Copyright (c) 2020 Landofcoder (https://www.landofcoder.com/)
+ * @license    https://www.landofcoder.com/LICENSE-1.0.html
  */
 
 namespace Lof\PosPermission\Setup;
 
-use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\InstallSchemaInterface;
 
-/**
- * Class InstallSchema
- *
- * @package Lof\PosPermission\Setup
- */
 class InstallSchema implements InstallSchemaInterface
 {
 
@@ -42,7 +35,23 @@ class InstallSchema implements InstallSchemaInterface
         SchemaSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        //Your install script
+        $installer = $setup;
+        $installer->startSetup(); 
+
+        $tableAdmins = $installer->getTable('authorization_role_pos');
+
+        $installer->getConnection()->addColumn(
+            $tableAdmins,
+            'max_custom_discount_rate',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                'length' => '12,4',
+                'default' => 0,
+                'nullable' => true,
+                'comment' => 'Max Custom Discount Rate (%) available for staff'
+            ]
+        );
+
+        $setup->endSetup();
     }
 }
-
